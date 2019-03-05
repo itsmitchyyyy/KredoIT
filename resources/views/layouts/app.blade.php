@@ -40,11 +40,15 @@
             @include('inc.nav-mobile')
             @include('inc.sidebar')
         @endauth
-    <div class="{{ (Request::is('/') || Request::is('register')) ? '' : ' page-container'}}">
+    <div class="{{ (Request::is('/') ||
+                    Request::is('register') ||
+                    Request::is('login')) ? '' : ' page-container'}}">
             @auth
                 @include('inc.nav-desktop')
             @endauth
-            @if (Request::is('/') || Request::is('register'))
+            @if (Request::is('/') ||
+                 Request::is('register') ||
+                 Request::is('login'))
             <div class="page-content--bge5">
                 <div class="container">
                     <div class="login-wrap">
@@ -75,4 +79,6 @@
 
 {{-- MAIN JS --}}
 <script src="{{ asset('js/main.js') }}"></script>
+
+@stack('scripts')
 </html>
