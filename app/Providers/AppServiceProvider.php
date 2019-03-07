@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Validator::extend('phone_number', function($attribute, $value, $parameters){
+            return substr($value, 0 ,2) == "09";
+        }, 'Contact No. is invalid');
         Schema::defaultStringLength(191);
     }
 }

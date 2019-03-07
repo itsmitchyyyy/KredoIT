@@ -1,5 +1,17 @@
 @extends('layouts.app')
-
+@push('css')
+    <style>
+        .page-wrapper {
+            overflow: auto !important;
+        }
+        .not-allowed {
+            cursor: not-allowed;
+        }
+        .allowed {
+            cursor: pointer;
+        }
+    </style>
+@endpush
 @section('content')
 <div class="page-content--bge5">
         <div class="container">
@@ -10,12 +22,12 @@
                         <label>{{ __('KREDO IT Abroad. Inc.') }}</label>
                     </div>
                     <div class="login-form">
-                        <form action="{{ route('register') }}" method="post">
+                        <form action="{{ route('register') }}" method="post" id="registerForm">
                             @csrf
                             <div id="firstStep">
                                     <div class="form-group">
                                             <label>{{ __('USER TYPE') }}</label>
-                                            <select name="user_type" id="user_type" class="au-input au-input--full form-control{{ $errors->has('user_type') ? ' is-invalid' : '' }}" required autofocus>
+                                    <select name="user_type" id="user_type" value="{{ old('user_type') }}" class="au-input au-input--full form-control{{ $errors->has('user_type') ? ' is-invalid' : '' }}" required autofocus>
                                                 <option value="" selected disabled>USER TYPE</option>
                                                 <option value="ADMIN">ADMIN</option>
                                                 <option value="MANAGER">MANAGER</option>
@@ -81,7 +93,30 @@
                                             </span>
                                         @endif
                                 </div>
-                                <button type="submit" class="au-btn au-btn--block au-btn--green m-b-20">Register</button>
+                                <div class="form-group">
+                                        <label>{{ __('Address') }}</label>
+                                        <input class="au-input au-input--full form-control{{ $errors->has('address') ? ' is-invalid' : '' }}" type="text" name="address" placeholder="Address" required>
+                                        @if ($errors->has('address'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('address') }}</strong>
+                                            </span>
+                                        @endif
+                                </div>
+                                <div class="form-group">
+                                        <label>{{ __('Contact Number') }}</label>
+                                        <input class="au-input au-input--full form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" type="text" name="phone" placeholder="Contact No." required>
+                                        @if ($errors->has('phone'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('phone') }}</strong>
+                                            </span>
+                                        @endif
+                                </div>
+                                <div class="form-group">
+                                    <div class="d-flex flex-row row-wrap">
+                                        <button type="submit" class="au-btn au-btn--block au-btn--green m-b-20 mr-2" id="previousForm">Previous</button>
+                                        <button type="submit" class="au-btn au-btn--block au-btn--green m-b-20 ml-2" id="submitForm">Register</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                         <div class="register-link">
@@ -99,27 +134,41 @@
 @push('scripts')
 <script>
     $(function(){
-        $('#firstSubmit').prop('disabled', true).css('cursor', 'not-allowed');
-        $('#firstStep :input').bind('keyup change', function(){
+        $('#firstSubmit').prop('disabled', true).addClass('not-allowed');
+        $('#submitForm').prop('disabled', true).addClass('not-allowed');
+        $('#firstStep :input').on('keyup change', function(){
             var empty = false;
-            $('#firstStep :input').each(function(){
-                if($(this).val() == null) {
+            $('#firstStep :input').not('#firstSubmit').each(function(){
+                if($(this).val() == null || $(this).val() == '')
                     empty = true;
-                }
             });
-            if(!empty) {
-                $('#firstSubmit').prop('disabled', false).css('cursor', 'pointer');
-            }
+            if(!empty) 
+                $('#firstSubmit').prop('disabled', false).addClass('allowed');
+        });
+
+        $('#secondStep :input').on('keyup change', function () {
+           var empty = false;
+           $('#secondStep :input').not('#submitForm, #previousForm').each(function(){
+                if ($(this).val() == '')
+                    empty = true;
+           });
+           if (!empty) 
+                $('#submitForm').prop('disabled', false).addClass('allowed');
         });
     });
 </script>
-<script>
+<script> 
     $(function(){
         $('#secondStep').hide();
         $('#firstSubmit').click(function(event){
             event.preventDefault();
             $('#firstStep').hide();
             $('#secondStep').show();
+        });
+        $('#previousForm').click(function(event){
+            event.preventDefault();
+            $('#firstStep').show();
+            $('#secondStep').hide();
         });
     });
 </script>
