@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Employee;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -54,7 +55,6 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'middle_name' => ['required', 'string', 'max:255'],
             'address' => ['required', 'string', 'max:255'],
             'first_name' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'phone_number','size:11']
@@ -69,10 +69,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'user_type' => $data['user_type'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        Employee::create([
+            'user_id' => $user->id,
+            'employee_fname' => $data['first_name'],
+            'employee_lname' => $data['last_name'],
+            'employee_mname' => $data['middle_name'],
+            'employee_address' => $data['address'],
+            'employee_phone' => $data['phone'],
+        ]);
+        return $user;
     }
 }

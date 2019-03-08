@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="form-group">
                                         <label>{{ __('Middle Name') }}</label>
-                                        <input class="au-input au-input--full form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}" type="text" name="middle_name" placeholder="Middle Name" required>
+                                        <input class="au-input au-input--full form-control{{ $errors->has('middle_name') ? ' is-invalid' : '' }}" type="text" name="middle_name" placeholder="Middle Name" id="middleName">
                                         @if ($errors->has('middle_name'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('middle_name') }}</strong>
@@ -148,7 +148,7 @@
 
         $('#secondStep :input').on('keyup change', function () {
            var empty = false;
-           $('#secondStep :input').not('#submitForm, #previousForm').each(function(){
+           $('#secondStep :input').not('#submitForm, #previousForm, #middleName').each(function(){
                 if ($(this).val() == '')
                     empty = true;
            });

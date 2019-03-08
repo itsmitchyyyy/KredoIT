@@ -3,37 +3,52 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    public function showLoginForm(){
+        return view('auth.login');
+    }
 
-    use AuthenticatesUsers;
+    public function login(Request $request){
+        $validator = validator()->make($request->all(), [
+            'email' => ['email', 'required'],
+            'password' => ['required','min:8']
+        ]);
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
+        if($validator->fails()) {
+            return redirect()->route('login')
+                ->withErrors($validator);
+        }
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+        if(filter_var($request->email, FILTER_VALIDATE_EMAIL)) {
+            if(Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                if(Auth::user()->user_status == 'DEACTIVATED'){
+                    Auth::logout();
+                    return redirect()->route('login')
+                        ->withErrors(['email' => 'Your account is deactivated']);
+                } else{
+                    return redirect()->route('home');
+                }
+            } else {
+                return redirect()->route('login')
+                    ->withErrors(['email' => 'Invalid Credentials']);
+            }
+        }
+    }
+
+    public function logout(Request $request) {
+        $this->guard()->logout();
+        $request->session()->flush();
+        $request->session()->regenerate();   
+
+        return redirect()->route('login');
+    }
+
+    public function guard(){
+        return Auth::guard();
     }
 }

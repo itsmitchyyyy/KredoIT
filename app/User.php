@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function employee(){
         return $this->hasOne('App\Employee', 'user_id', 'id');
     }
+
+    public function userFullName() {
+        return $this->employee->employee_fname.' '.$this->employee->employee_lname;
+    }
 }

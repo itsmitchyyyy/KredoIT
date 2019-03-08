@@ -21,12 +21,12 @@
                             <div class="form-group">
                                 <label>Password</label>
                                 <input class="au-input au-input--full form-control {{ $errors->has('password') ? ' is-invalid': '' }}" type="password" name="password" placeholder="Password">
-                            </div>
                             @if ($errors->has('password'))
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $errors->first('password') }}</strong>
                             </span>
                             @endif
+                            </div>
                             <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
                         </form>
                         <div class="register-link">
