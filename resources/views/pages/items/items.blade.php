@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <ul class="nav-tabs nav" id="itemTabs" role="tablist">
                         <li class="nav-item">
-                            <a href="#listitems" class="nav-link active" id="list-items-tab" data-toggle="tab"
+                            <a href="#list-items" class="nav-link active" id="list-items-tab" data-toggle="tab"
                              role="tab" aria-controls="listitems" aria-selected="true">
                              List Items
                             </a>
@@ -35,6 +35,10 @@
                     </ul>
                     <div class="tab-content pl-3 p-1" id="itemTabsContent">
                         <div class="tab-pane fade show active" id="list-items" role="tabpanel" aria-labelledby="list-items-tab">
+                            @include('pages.items.modals.list-items')
+                            <div class="d-flex justify-content-end">
+                                <button class="au-btn au-btn--green" type="button" data-id="listItemModal" onclick="openModal(this)">ADD</button>
+                            </div>
                             <div class="table-responsive m-b-40 m-t-40">
                                 <table class="table table-borderless table-data3">
                                     <thead>
@@ -130,6 +134,18 @@
                         <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
                             <i class="zmdi zmdi-delete"></i>
                         </button></td></tr>`;
+            } else if(attribute == 'list'){
+                return `<tr><td>`+res.categories[0].categoryName+`</td><td>`+res.brand[0].brandName+`</td><td>`+res.models[0].modelName+`</td>
+                        <td class="process">`+res.quantity+`</td><td>`+res.status+`</td>
+                        <td>
+                            <div class="table-data-feature">
+                                <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button>
+                                <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                                    <i class="zmdi zmdi-delete"></i>
+                                </button>
+                            </div></td></tr>`;
             }
         }
 
@@ -140,6 +156,7 @@
                 type: "get",
                 dataType: "json",
                 success: function(res) {
+                    console.log(res);
                     var data = '';
                     for(var i = 0; i < res.length; i++) {
                         data += fillUpData(res[i], attribute);
@@ -148,10 +165,34 @@
                 }
             })
         }
+
+        function populateSelectForm(){
+            $('select[data-source]').each(function(){
+                var $select = $(this);
+                $select.empty();
+                $select.append('<option></option>');
+                $.ajax({
+                    url: $select.attr('data-source'),
+                }).then(function(options){
+                    options.map(function(option){
+                        var $option = $('<option>');
+
+                            $option
+                                .val(option[$select.attr('data-valueKey')])
+                                .text(option[$select.attr('data-displayKey')]);
+                        
+                        $select.append($option);
+                    });
+                });
+            });
+        }
         $(function() {
+            populateSelectForm();
+            getData("#listItemsBody", "{{ route('item.list') }}", "list");
             getData("#categoryBody", "{{ route('category.index') }}", "category");
             getData("#modelBody", "{{ route('model.index') }}", "model");
             getData("#brandBody", "{{ route('brand.index') }}", "brand");
+
             $('#addCategoryBtn').click(function(){
                 var formData = $('#addCategoryForm').serialize();
                 $.ajax({
@@ -160,6 +201,7 @@
                     data: formData,
                     success: function(res) {
                         getData("#categoryBody", "{{ route('category.index') }}", "category");
+                        populateSelectForm();
                         $('#categoryModal').modal('hide');
                     }
                 })
@@ -172,6 +214,7 @@
                     data: formData,
                     success: function(res) {
                         getData("#modelBody", "{{ route('model.index') }}", "model");
+                        populateSelectForm();
                         $('#modelModal').modal('hide');
                     }
                 })
@@ -179,27 +222,31 @@
             $('#addBrandBtn').click(function(){
                 var formData = $('#addBrandForm').serialize();
                 $.ajax({
-                    url: "{{ route('brand.create') }}",
+                    url: "{{ route('item.create') }}",
                     type: "post",
                     data: formData,
                     success: function(res) {
                         getData("#brandBody", "{{ route('brand.index') }}", "brand");
+                        populateSelectForm();
                         $('#brandModal').modal('hide');
                     }
                 })
             });
+            $('#addListItemBtn').click(function(){
+                var formData = $('#listItemForm').serialize();
+                $.ajax({
+                    url: "{{ route('item.create') }}",
+                    type: "post",
+                    data: formData,
+                    success: function(res) {
+                        getData("#listItemsBody", "{{ route('item.list') }}", "list");
+                        populateSelectForm();
+                        $('#listItemModal').modal('hide');
+                    }
+                })
+            });
 
-            var listItemsData = `<tr><td>2018-09-29 05:57</td><td>Mobile</td><td>iPhone X 64Gb Grey</td>
-                                <td class="process">Processed</td><td>$999.00</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                            <i class="zmdi zmdi-edit"></i>
-                                        </button>
-                                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                            <i class="zmdi zmdi-delete"></i>
-                                        </button>
-                                    </div></td></tr>`;
+            var listItemsData = ``;
             $('#listItemsBody').append(listItemsData);
         });
     </script>
