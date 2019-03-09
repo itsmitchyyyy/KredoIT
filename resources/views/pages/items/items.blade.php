@@ -54,7 +54,7 @@
                         <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">
                             @include('pages.items.modals.category')
                             <div class="d-flex justify-content-end">
-                                <button class="au-btn au-btn--green" type="button" data-toggle="modal" data-target="#categoryModal">ADD</button>
+                                <button class="au-btn au-btn--green" type="button" data-id="categoryModal" onclick="openModal(this)">ADD</button>
                             </div>
                             <div class="table-responsive m-b-40 m-t-40">
                                 <table class="table table-borderless table-data3">
@@ -69,6 +69,10 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="brand" role="tabpanel" aria-labelledby="brand-tab">
+                            @include('pages.items.modals.brand')
+                            <div class="d-flex justify-content-end">
+                                <button class="au-btn au-btn--green" type="button" data-id="brandModal" onclick="openModal(this)">ADD</button>
+                            </div>
                             <div class="table-responsive m-b-40 m-t-40">
                                 <table class="table table-borderless table-data3">
                                     <thead>
@@ -82,6 +86,10 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="model" role="tabpanel" aria-labelledby="model-tab">
+                            @include('pages.items.modals.model')
+                            <div class="d-flex justify-content-end">
+                                <button class="au-btn au-btn--green" type="button" data-id="modelModal" onclick="openModal(this)">ADD</button>
+                            </div>
                             <div class="table-responsive m-b-40 m-t-40">
                                 <table class="table table-borderless table-data3">
                                     <thead>
@@ -102,31 +110,48 @@
 @endsection
 @push('scripts')
     <script>
-        function categories(){
-            $('#categoryBody').empty();
+
+        function fillUpData(res, attribute){
+            if(attribute == 'category' || attribute == 'model' || attribute == 'brand') {
+                var fieldName;
+                if(attribute == 'category') 
+                   fieldName = res.categoryName;
+                else if(attribute == 'model')
+                    fieldName = res.modelName;
+                else if(attribute == 'brand')
+                    fieldName = res.brandName;
+
+                return `<tr><td>`+fieldName+`</td>
+                        <td>
+                        <div class="table-data-feature">
+                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
+                            <i class="zmdi zmdi-edit"></i>
+                        </button>
+                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="zmdi zmdi-delete"></i>
+                        </button></td></tr>`;
+            }
+        }
+
+        function getData(id, route, attribute){
+            $(id).empty();
             $.ajax({
-                url: "{{ route('category.index') }}",
+                url: route,
                 type: "get",
                 dataType: "json",
                 success: function(res) {
-                    var categoryData = '';
+                    var data = '';
                     for(var i = 0; i < res.length; i++) {
-                        categoryData += `<tr><td>`+res[i].categoryName+`</td>
-                            <td>
-                            <div class="table-data-feature">
-                            <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                <i class="zmdi zmdi-edit"></i>
-                            </button>
-                            <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                <i class="zmdi zmdi-delete"></i>
-                            </button></td></tr>`;
+                        data += fillUpData(res[i], attribute);
                     }
-                    $('#categoryBody').html(categoryData);
+                    $(id).html(data);
                 }
             })
         }
         $(function() {
-            categories();
+            getData("#categoryBody", "{{ route('category.index') }}", "category");
+            getData("#modelBody", "{{ route('model.index') }}", "model");
+            getData("#brandBody", "{{ route('brand.index') }}", "brand");
             $('#addCategoryBtn').click(function(){
                 var formData = $('#addCategoryForm').serialize();
                 $.ajax({
@@ -134,11 +159,36 @@
                     type: "post",
                     data: formData,
                     success: function(res) {
-                        categories();
+                        getData("#categoryBody", "{{ route('category.index') }}", "category");
                         $('#categoryModal').modal('hide');
                     }
                 })
             });
+            $('#addModelBtn').click(function(){
+                var formData = $('#addModelForm').serialize();
+                $.ajax({
+                    url: "{{ route('model.create') }}",
+                    type: "post",
+                    data: formData,
+                    success: function(res) {
+                        getData("#modelBody", "{{ route('model.index') }}", "model");
+                        $('#modelModal').modal('hide');
+                    }
+                })
+            });
+            $('#addBrandBtn').click(function(){
+                var formData = $('#addBrandForm').serialize();
+                $.ajax({
+                    url: "{{ route('brand.create') }}",
+                    type: "post",
+                    data: formData,
+                    success: function(res) {
+                        getData("#brandBody", "{{ route('brand.index') }}", "brand");
+                        $('#brandModal').modal('hide');
+                    }
+                })
+            });
+
             var listItemsData = `<tr><td>2018-09-29 05:57</td><td>Mobile</td><td>iPhone X 64Gb Grey</td>
                                 <td class="process">Processed</td><td>$999.00</td>
                                 <td>
@@ -150,35 +200,20 @@
                                             <i class="zmdi zmdi-delete"></i>
                                         </button>
                                     </div></td></tr>`;
-            var brandData = `<tr><td>Lenovo</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                        <i class="zmdi zmdi-edit"></i>
-                                    </button>
-                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </button></td></tr>`;
-            var modelData = `<tr><td>Model</td>
-                                <td>
-                                    <div class="table-data-feature">
-                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                                        <i class="zmdi zmdi-edit"></i>
-                                    </button>
-                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </button></td></tr>`;
             $('#listItemsBody').append(listItemsData);
-            $('#brandBody').append(brandData);
-            $('#modelBody').append(modelData);
         });
     </script>
     <script>
-        $('#categoryModal').on('show.bs.modal', function(){
-            $('.section__content').toggleClass('position-unset');
-        });
-        $('#categoryModal').on('hide.bs.modal', function(){
-            $('.section__content').toggleClass('position-unset');
-        });
+        function openModal(event){
+            var id = $(event).data('id');
+            $('#'+id).modal('show');
+        }
+
+            $('.modal').on('show.bs.modal', function(){
+                $('.section__content').toggleClass('position-unset');
+            });
+            $('.modal').on('hide.bs.modal', function(){
+                $('.section__content').toggleClass('position-unset');
+            });
     </script>
 @endpush

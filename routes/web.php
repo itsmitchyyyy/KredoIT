@@ -23,3 +23,9 @@ Route::get('/home', 'ItemController@index')->name('home');
 //Category
 Route::get('category', 'CategoryController@index')->name('category.index');
 Route::post('category/create', 'CategoryController@create')->name('category.create');
+//Model
+Route::get('model', 'ModelController@index')->name('model.index');
+Route::post('model/create', 'ModelController@create')->name('model.create');
+//Brand
+Route::get('brand', 'BrandController@index')->name('brand.index');
+Route::post('brand/create', 'BrandController@create')->name('brand.create');
