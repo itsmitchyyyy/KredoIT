@@ -8,7 +8,7 @@
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
-                    <li class="active">
+                    <li class="{{ Request::is('home') ? ' active' : '' }}">
                         <a href="chart.html">
                             <i class="fas fa-bell"></i>Notifications</a>
                     </li>
@@ -20,8 +20,8 @@
                         <a href="form.html">
                             <i class="far fa-envelope"></i>Request Items</a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li class="{{ Request::is('account') ? ' active': '' }}">
+                        <a href="{{ route('account.index') }}">
                             <i class="fas fa-users"></i>Create Account</a>
                     </li>
                 </ul>

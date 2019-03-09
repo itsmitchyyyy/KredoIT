@@ -1,3 +1,8 @@
+@if(Auth::user())
+    <script>
+        window.location = "{{ URL::to('home') }}";
+    </script>
+@endif
 @extends('layouts.app')
 
 @section('content')
