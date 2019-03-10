@@ -12,14 +12,13 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">Account</div>
-
                 <div class="card-body">
                     @include('pages.account.modals.create')
                     <div class="d-flex justify-content-end">
                         <button class="au-btn au-btn--green" data-id="createModal" onclick="openModal(this)">Add</button>
                     </div>
                     <div class="table-responsive m-b-40 m-t-40">
-                        <table class="table table-borderless table-data3">
+                        <table class="table table-borderless table-data3" id="accountTable">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -44,9 +43,10 @@
     <script>
         function fillUpData(res){
             var name = res.employee.employee_fname + res.employee.employee_lname;
-            return `<tr><td>`+name+`</td><td>`+res.user_type+`</td>
-            <td>`+res.email+`</td><td>`+res.employee.employee_address+`</td><td>`+res.employee.employee_phone+`</td>
-            <td>`+res.user_status+`</td><td>
+            return `<tr><td ondblclick="updateTd(this)">`+name+`</td><td ondblclick="updateTd(this)">`+res.user_type+`</td>
+            <td ondblclick="updateTd(this)">`+res.email+`</td><td ondblclick="updateTd(this)">`+res.employee.employee_address+`</td>
+            <td class=ondblclick="updateTd(this)">`+res.employee.employee_phone+`</td>
+            <td ondblclick="updateTd(this)">`+res.user_status+`</td><td>
             <div class="table-data-feature">
                 <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
                     <i class="zmdi zmdi-edit"></i>
@@ -75,6 +75,22 @@
             $('#'+id).modal('show');
         }
 
+        function updateTd(event){
+               var currentElem = $(event);
+               var value = $(event).html(); 
+               newInput(currentElem, value);
+        }
+
+        function newInput(elem, value){
+            $(elem).html('<input class="tdVal form-control" type="text" value="' + value + '"/>');
+            $('.tdVal').focus();
+            $('.tdVal').keyup(function(event){
+                if(event.keyCode == 13) {
+                    $(elem).html($('.tdVal').val().trim()); 
+                }
+            });
+        }
+
         $('.modal').on('show.bs.modal', function(){
             $('.section__content').toggleClass('position-unset');
         });
@@ -86,7 +102,18 @@
         $(function(){
             getData('#accountsBody', "{{ route('account.list') }}");
             
-           
+            $('#createAccountBtn').click(function(){
+                var formData = $('#createAccountForm').serialize();
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('account.create') }}",
+                    data: formData
+                }).then(function(){
+                    getData('#accountsBody', "{{ route('account.list') }}");
+                    $('#createModal').modal('hide');
+                });
+            });
+
         });
     </script>
 @endpush

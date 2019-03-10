@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('register') }}" method="post" id="createAccountForm">
+                <form method="post" id="createAccountForm">
                     @csrf
                     <div id="firstStep">
                             <div class="form-group">
@@ -94,11 +94,18 @@
                                     </span>
                                 @endif
                         </div>
+                        <div class="form-group">
+                            <label>{{ __('Status') }}</label>
+                            <select name="user_status" class="au-input au-input--full form-control">
+                                <option value="ACTIVATED">ACTIVATED</option>
+                                <option value="DEACTIVATED">DEACTIVATED</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary mr-1" id="createAccountBtn">Previous</button>
+                <button type="button" class="btn btn-primary mr-1" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary ml-1" id="createAccountBtn">Confirm</button>
             </div>
         </div>
