@@ -11,13 +11,13 @@ use Illuminate\Http\Request;
 
 class AccountController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
      public function index(){
         return view('pages.account.create');
+    }
+
+    public function list(){
+        $users = User::with('employee')->get();
+        return response()->json($users);
     }
 
     // public function validateRequest(Request $data)

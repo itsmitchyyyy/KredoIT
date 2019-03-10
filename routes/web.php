@@ -19,6 +19,7 @@ Auth::routes();
 
 //Account
 Route::get('account', 'AccountController@index')->name('account.index');
+Route::get('account/list', 'AccountController@list')->name('account.list');
 // Route::post('account/create', 'AccountController@create')->name('account.create');
 
 // Item

@@ -114,7 +114,6 @@
 @endsection
 @push('scripts')
     <script>
-
         function fillUpData(res, attribute){
             if(attribute == 'category' || attribute == 'model' || attribute == 'brand') {
                 var fieldName;
@@ -222,7 +221,7 @@
             $('#addBrandBtn').click(function(){
                 var formData = $('#addBrandForm').serialize();
                 $.ajax({
-                    url: "{{ route('item.create') }}",
+                    url: "{{ route('brand.create') }}",
                     type: "post",
                     data: formData,
                     success: function(res) {
@@ -245,9 +244,6 @@
                     }
                 })
             });
-
-            var listItemsData = ``;
-            $('#listItemsBody').append(listItemsData);
         });
     </script>
     <script>
@@ -261,6 +257,7 @@
             });
             $('.modal').on('hide.bs.modal', function(){
                 $('.section__content').toggleClass('position-unset');
+                $(this).find('form').trigger('reset');
             });
     </script>
 @endpush
