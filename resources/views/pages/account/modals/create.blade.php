@@ -87,7 +87,7 @@
                         </div>
                         <div class="form-group">
                                 <label>{{ __('Contact Number') }}</label>
-                                <input class="au-input au-input--full form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" type="text" name="phone" placeholder="Contact No." required>
+                                <input class="au-input au-input--full form-control{{ $errors->has('phone') ? ' is-invalid' : '' }}" type="text" name="phone" placeholder="Ex: 09291111111" required>
                                 @if ($errors->has('phone'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('phone') }}</strong>
