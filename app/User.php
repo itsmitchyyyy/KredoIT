@@ -41,6 +41,10 @@ class User extends Authenticatable
         return $this->hasOne('App\Employee', 'user_id', 'id');
     }
 
+    public function items(){
+        return $this->hasMany('App\Item', 'user_id', 'id');
+    }
+
     public function userFullName() {
         return $this->employee->employee_fname.' '.$this->employee->employee_lname;
     }
