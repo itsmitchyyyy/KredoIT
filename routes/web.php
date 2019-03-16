@@ -38,3 +38,6 @@ Route::post('model/create', 'ModelController@create')->name('model.create');
 //Brand
 Route::get('brand', 'BrandController@index')->name('brand.index');
 Route::post('brand/create', 'BrandController@create')->name('brand.create');
+
+//Request Item
+Route::post('request/create', 'RequestItemController@create')->name('request.create');

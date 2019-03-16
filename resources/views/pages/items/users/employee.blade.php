@@ -13,10 +13,14 @@
                                 <th>Model</th>
                                 <th>Quantity</th>
                                 <th>Status</th>
+                                <th>Borrow</th>
                             </tr>
                         </thead>
-                        <tbody id="modelBody"></tbody>
+                        <tbody id="itemBody"></tbody>
                     </table>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button class="au-btn au-btn--green" id="sendRequest" disabled>Submit</button>
                 </div>
             </div>
         </div>
