@@ -40,6 +40,8 @@ Route::get('brand', 'BrandController@index')->name('brand.index');
 Route::post('brand/create', 'BrandController@create')->name('brand.create');
 
 //Request Item
+Route::get('request', 'RequestItemController@index')->name('request.index');
+Route::get('request/list', 'RequestItemController@list')->name('request.list');
 Route::post('request/create', 'RequestItemController@create')->name('request.create');
 
 //Borrowed Item

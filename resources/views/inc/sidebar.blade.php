@@ -23,8 +23,8 @@
                         </li>
                     @endif
                     @if (Auth::user()->user_type == 'MANAGER' || Auth::user()->user_type == 'ADMIN')
-                        <li>
-                            <a href="form.html">
+                        <li class="{{ Request::is('request') ? ' active' : '' }}">
+                            <a href="{{ route('request.index') }}">
                             <i class="far fa-envelope"></i>Request Items</a>
                         </li>
                     @endif

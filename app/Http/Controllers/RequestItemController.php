@@ -13,6 +13,11 @@ class RequestItemController extends Controller
     public function __construct(){
         date_default_timezone_set('Asia/Manila');
     }
+
+    public function index(){
+        return view('pages.request.request');
+    }
+
     public function create(Request $request) {
         $itemIds = $request->quantity;
         foreach($itemIds as $index => $val){
@@ -24,6 +29,11 @@ class RequestItemController extends Controller
             RequestItem::create($request->except(['quantity, items, token']));
         }
         return;
+    }
+
+    public function list(){
+        $requests = RequestItem::with('user.employee', 'item')->where(['request_status' => 'pending'])->get();
+        return response()->json($requests);
     }
 
     function generateSerialNumber(){
