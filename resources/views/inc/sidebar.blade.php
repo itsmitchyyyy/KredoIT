@@ -8,12 +8,12 @@
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
-                    <li class="{{ Request::is('home') ? ' active' : '' }}">
-                        <a href="chart.html">
+                    <li class="{{ Request::is('notification') ? ' active' : '' }}">
+                        <a href="{{ route('notification.index') }}">
                             <i class="fas fa-bell"></i>Notifications</a>
                     </li>
-                    <li>
-                        <a href="table.html">
+                    <li class="{{ Request::is('item') ? ' active' : '' }}">
+                        <a href="{{ route('item.index') }}">
                             <i class="fas fa-tachometer-alt"></i>Items</a>
                     </li>
                     @if (Auth::user()->user_type == 'EMPLOYEE')

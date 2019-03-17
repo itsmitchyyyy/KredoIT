@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\RequestItem;
+use App\PurchaseRequest;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -32,8 +33,20 @@ class RequestItemController extends Controller
     }
 
     public function list(){
-        $requests = RequestItem::with('user.employee', 'item')->where(['request_status' => 'pending'])->get();
+        $requests = RequestItem::with('user.employee', 'item')->get();
         return response()->json($requests);
+    }
+
+    public function update(Request $request){
+        $request->request->add(['request_approver_id' => Auth::user()->id]);
+        $requestItem = RequestItem::find($request->id);
+        $requestItem->update($request->except(['token', 'id']));
+        if($request->request_status == 'approved') {
+            PurchaseRequest::create([
+                'user_id' => $requestItem->user_id,
+                'request_id' => $requestItem->id]);
+            }
+        return $request;
     }
 
     function generateSerialNumber(){

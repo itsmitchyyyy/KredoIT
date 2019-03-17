@@ -31,7 +31,7 @@ class LoginController extends Controller
                     return redirect()->route('login')
                         ->withErrors(['email' => 'Your account is deactivated']);
                 } else{
-                    return redirect()->route('home');
+                    return redirect()->route('notification.index');
                 }
             } else {
                 return redirect()->route('login')

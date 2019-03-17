@@ -14,7 +14,12 @@ class RequestItem extends Model
         'request_date',
         'request_return_date',
         'request_approver_id',
+        'request_status'
     ];
+
+    public function requests(){
+        return $this->hasMany('App\PurchaseRequest', 'request_id', 'id');
+    }
 
     public function user(){
         return $this->belongsTo('App\User');
@@ -22,5 +27,9 @@ class RequestItem extends Model
 
     public function item(){
         return $this->belongsTo('App\Item');
+    }
+
+    public function approver(){
+        return $this->belongsTo('App\User', 'request_approver_id');
     }
 }

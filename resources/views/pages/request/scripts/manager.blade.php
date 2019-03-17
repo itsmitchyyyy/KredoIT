@@ -1,48 +1,97 @@
 <script>
     $(function(){
        getRequest();
+       getReturned();
+       getHistory();
     });
 
+    function fillUpTBody(res, attribute){
+        if(attribute == 'request') {
+            return `<tr>
+                    <td>`+res.user.employee.employee_fname+` `+res.user.employee.employee_lname+`</td>
+                    <td>`+res.item.itemName+`</td>
+                    <td>`+moment(res.request_date).format('MMMM DD, YYYY')+`</td>
+                    <td>`+moment(res.request_return_date).format('MMMM DD YYYY')+`</td>
+                    <td>
+                        <button class="btn btn-success" onclick="updateRequest(`+res.id+`, 'approved')">
+                            Approve
+                        </button>
+                        <button class="btn btn-danger" onclick="updateRequest(`+res.id+`, 'denied')">
+                            Deny
+                        </button>
+                    </td>
+                    </tr>`;
+        } else {
+            return `<tr>
+                    <td>`+res.user.employee.employee_fname+` `+res.user.employee.employee_lname+`</td>
+                    <td>`+res.requests.item.itemName+`</td>
+                    <td>`+res.requests.approver.employee.employee_fname+` `+res.requests.approver.employee.employee_lname+`</td>
+                    <td>`+moment(res.requests.request_date).format('MMMM DD, YYYY')+`</td>
+                    <td>`+moment(res.requests.request_return_date).format('MMMM DD YYYY')+`</td>
+                    </tr>`;
+        }
+    }
+
+    function getHistory(){
+        $('#historyBody').empty();
+        $.ajax({
+            url: "{{ route('purchase.list') }}",
+        }).then(function(result){
+            var options = '';
+            result.map(function(res){
+                options += fillUpTBody(res, 'all');
+            });
+            $('#historyBody').append(options);
+        });
+    }
+
+    function getReturned(){
+        $('#returnedBody').empty();
+        $.ajax({
+            url: "{{ route('purchase.list') }}",
+        }).then(function(result){
+            var options = '';
+            result.map(function(res){
+                if(res.item_request_status == 'returned')
+                    options += fillUpTBody(res, 'all');
+            });
+            $('#returnedBody').append(options);
+        });
+    }
+
     function getRequest(){
+        $('#requestItemsBody').empty();
         $.ajax({
             url: "{{ route('request.list') }}"
         }).then(function(result){
             var options = '';
             result.map(function(res) {
-                options += `<tr>
-                <td>`+res.user.employee.employee_fname+` `+res.user.employee.employee_lname+`</td>
-                <td>`+res.item.itemName+`</td>
-                <td>`+res.request_date+`</td>
-                <td>`+res.request_return_date+`</td>
-                <td>`+res.status+`</td>
-                <td>
-                    <div class="table-data-feature">
-                        <button class="item" data-toggle="tooltip" data-placement="top" title="Edit">
-                            <i class="zmdi zmdi-edit"></i>
-                        </button>
-                        <button class="item" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="zmdi zmdi-delete"></i>
-                        </button>
-                    </div>
-                </td>
-                </tr>`;
+                if(res.request_status == 'pending')
+                    options += fillUpTBody(res, 'request');
+            });
+            $('#requestItemsBody').append(options);
+        });
+    }
+
+    function updateRequest(id, status){
+        $.ajax({
+            type: 'put',
+            url: "{{ route('request.update') }}",
+            data: {
+                _token: "{{ csrf_token() }}",
+                id: id,
+                request_status: status
+            }
+        }).then(function(res){
+            swal({
+                title: "Success",
+                icon: "success",
+                timer: 1000,
+                button: false,
+                text: "Status Updated"
+            }).then(function(){
+                getRequest();
             });
         });
     }
 </script>
-
-{{-- var options = '';
-            result.map(function(res) {
-                options += `<tr>
-                <td>`+res.categories[0].categoryName+`</td>
-                <td>`+res.brand[0].brandName+`</td>
-                <td>`+res.models[0].modelName+`</td>
-                <td>`+res.quantity+`</td>
-                <td>`+res.status+`</td>
-                <td id="tditem`+res.id+`" class="tdItems">
-                   <div class="d-flex flex-row flex-wrap justify-content-end">
-                        <input type="checkbox" id="option`+res.id+`" onclick="addQuantity('tditem`+res.id+`', this)">
-                   </div>
-                </td>
-                </tr>`;
-            }); --}}

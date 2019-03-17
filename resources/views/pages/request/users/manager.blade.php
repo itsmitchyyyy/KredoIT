@@ -49,7 +49,7 @@
                                             <th>Return Date</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="categoryBody"></tbody>
+                                    <tbody id="historyBody"></tbody>
                                 </table>
                             </div>
                         </div>
@@ -65,7 +65,7 @@
                                             <th>Return Date</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="brandBody"></tbody>
+                                    <tbody id="returnedBody"></tbody>
                                 </table>
                             </div>
                         </div>
