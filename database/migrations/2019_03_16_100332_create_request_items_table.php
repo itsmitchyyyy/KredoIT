@@ -21,7 +21,7 @@ class CreateRequestItemsTable extends Migration
             $table->string('request_item_serial_no');
             $table->date('request_date');
             $table->date('request_return_date');
-            $table->integer('request_approver_id');
+            $table->integer('request_approver_id')->nullable();
             $table->string('request_status')->default('pending');
             $table->timestamps();
         });

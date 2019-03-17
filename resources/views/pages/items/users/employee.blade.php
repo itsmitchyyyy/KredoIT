@@ -20,7 +20,10 @@
                     </table>
                 </div>
                 <div class="d-flex justify-content-end">
-                    <button class="au-btn au-btn--green" id="sendRequest" disabled>Submit</button>
+                    <div class="d-flex flex-column">
+                        <input type="text" id="requestReturnDate" name="request_return_date" placeholder="Return Date" class="form-control d-none">
+                        <button class="au-btn au-btn--green mt-2" id="sendRequest" disabled>Submit</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -41,3 +41,8 @@ Route::post('brand/create', 'BrandController@create')->name('brand.create');
 
 //Request Item
 Route::post('request/create', 'RequestItemController@create')->name('request.create');
+
+//Borrowed Item
+Route::get('borrowed', 'BorrowedItemController@index')->name('borrowed.index');
+Route::get('borrowed/list', 'BorrowedItemController@list')->name('borrowed.list');
+Route::delete('borrowed/delete', 'BorrowedItemController@delete')->name('borrowed.delete');

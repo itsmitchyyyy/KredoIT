@@ -23,7 +23,6 @@ class ItemController extends Controller
     }
 
     public function create(Request $request){
-        $request->request->add(['user_id' => Auth::user()->id]);
         $request->request->add(['dateBought' => Carbon::now()]);
         return Item::create($request->except(['token']));
     }

@@ -17,8 +17,8 @@
                             <i class="fas fa-tachometer-alt"></i>Items</a>
                     </li>
                     @if (Auth::user()->user_type == 'EMPLOYEE')
-                        <li>
-                            <a href="form.html">
+                        <li class="{{ Request::is('borrowed') ? ' active' : '' }}">
+                            <a href="{{ route('borrowed.index') }}">
                             <i class="far fa-envelope"></i>Borrowed Items</a>
                         </li>
                     @endif

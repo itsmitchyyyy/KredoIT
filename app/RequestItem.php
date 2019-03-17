@@ -15,4 +15,12 @@ class RequestItem extends Model
         'request_return_date',
         'request_approver_id',
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function item(){
+        return $this->belongsTo('App\Item');
+    }
 }

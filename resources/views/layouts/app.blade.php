@@ -32,6 +32,7 @@
 
     <!-- Main Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('vendor/datepicker/css/bootstrap-datepicker.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
 
     @stack('css')
@@ -78,9 +79,12 @@
 <script src="{{ asset('vendor/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 <script src="{{ asset('vendor/chartjs/Chart.bundle.min.js') }}"></script>
 <script src="{{ asset('vendor/select2/select2.min.js') }}"></script>
+<script src="{{ asset('vendor/sweetalert/sweetalert.min.js') }}"></script>
 
 {{-- MAIN JS --}}
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ asset('vendor/moment.js') }}"></script>
 
 @stack('scripts')
 </html>
