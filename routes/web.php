@@ -24,6 +24,7 @@ Route::post('account/create', 'AccountController@create')->name('account.create'
 Route::delete('account/delete', 'AccountController@delete')->name('account.delete');
 Route::get('account/get', 'AccountController@get')->name('account.get');
 Route::put('account/update', 'AccountController@update')->name('account.update');
+Route::put('account/updatePassword', 'AccountController@updatePassword')->name('account.update.password');
 
 // Notification
 Route::get('notification', 'NotificationController@index')->name('notification.index');

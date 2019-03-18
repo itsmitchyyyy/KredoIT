@@ -65,6 +65,14 @@ class AccountController extends Controller
         return $user;
     }
 
+    public function updatePassword(Request $request){
+        if($request->password == $request->confirm_password) {
+            $password = Hash::make($request->password);
+            User::find($request->id)->update(['password' => $password]);
+            return;
+        }
+    }
+
     public function delete(Request $request){
         User::find($request->id)->delete();
         Employee::find($request->emp_id)->delete();

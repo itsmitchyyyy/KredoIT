@@ -1,4 +1,6 @@
  <!-- HEADER DESKTOP-->
+ @include('inc.modals.account')
+ @include('inc.modals.change')
  <header class="header-desktop">
         <div class="section__content section__content--p30">
             <div class="container-fluid">
@@ -21,7 +23,7 @@
                                     </div>
                                     <div class="account-dropdown__body">
                                         <div class="account-dropdown__item">
-                                            <a href="#">
+                                            <a href="#" id="accountBtn">
                                                 <i class="zmdi zmdi-account"></i>Account</a>
                                         </div>
                                     </div>

@@ -85,6 +85,44 @@
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('vendor/datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('vendor/moment.js') }}"></script>
+<script>
+    $('#accountBtn').click(function(){
+        $('#accountModal').modal('show');
+    });
 
+    $('#accountModal').on('shown.bs.modal', function(){
+        var accountModal = $(this);
+        $('#changePassword').click(function(e){
+            e.preventDefault();
+            $('#changePasswordModal').modal('show');
+            accountModal.modal('hide');
+        });
+    });
+
+    $('#changePasswordBtn').click(function () {
+        var data = $('#changePasswordForm').serializeArray();
+        var objectData = {};
+        $.each(data, function(i, field){
+            objectData[field.name] = field.value;
+        });
+        objectData['id'] = $(this).data('id');
+
+        $.ajax({
+            type: 'put',
+            url: "{{ route('account.update.password') }}",
+            data: objectData
+        }).then(function(){
+            swal({
+                title: "Success",
+                text: "Password updated",
+                icon: "success",
+                timer: 1000,
+                button: false
+            }).then(function(){
+                $('#changePasswordModal').modal('hide');
+            });          
+        });
+    });
+</script>
 @stack('scripts')
 </html>
