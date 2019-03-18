@@ -12,4 +12,8 @@ class Notification extends Model
         'description',
         'status'
     ];
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

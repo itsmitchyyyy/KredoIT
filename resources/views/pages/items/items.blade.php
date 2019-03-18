@@ -22,4 +22,5 @@
 @push('scripts')
     @includeWhen(Auth::user()->user_type == 'ADMIN', 'pages.items.scripts.admin', ['some' => 'data'])
     @includeWhen(Auth::user()->user_type == 'EMPLOYEE', 'pages.items.scripts.employee', ['some' => 'data'])
+    @includeWhen(Auth::user()->user_type == 'MANAGER', 'pages.items.scripts.manager', ['some' => 'data'])
 @endpush

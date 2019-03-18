@@ -21,12 +21,17 @@ Auth::routes();
 Route::get('account', 'AccountController@index')->name('account.index');
 Route::get('account/list', 'AccountController@list')->name('account.list');
 Route::post('account/create', 'AccountController@create')->name('account.create');
+Route::delete('account/delete', 'AccountController@delete')->name('account.delete');
+Route::get('account/get', 'AccountController@get')->name('account.get');
+Route::put('account/update', 'AccountController@update')->name('account.update');
 
 // Notification
-Route::get('/notification', 'NotificationController@index')->name('notification.index');
+Route::get('notification', 'NotificationController@index')->name('notification.index');
+Route::get('notification/list', 'NotificationController@list')->name('notification.list');
+Route::get('notification/all', 'NotificationController@all')->name('notification.all');
 
 // Item
-Route::get('/item', 'ItemController@index')->name('item.index');
+Route::get('item', 'ItemController@index')->name('item.index');
 Route::post('item/create', 'ItemController@create')->name('item.create');
 Route::get('item/list', 'ItemController@list')->name('item.list');
 
@@ -55,3 +60,5 @@ Route::delete('borrowed/delete', 'BorrowedItemController@delete')->name('borrowe
 
 // Purchase Request
 Route::get('purchase/list', 'PurchaseRequestController@list')->name('purchase.list');
+Route::get('purchase/employee/list', 'PurchaseRequestController@borrowedList')->name('purchase.borrowed.list');
+Route::put('purchase/update', 'PurchaseRequestController@update')->name('purchase.update');

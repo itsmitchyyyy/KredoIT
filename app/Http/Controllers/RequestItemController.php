@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notification;
 use App\RequestItem;
 use App\PurchaseRequest;
 use Illuminate\Http\Request;
@@ -27,7 +28,16 @@ class RequestItemController extends Controller
             $request->request->add(['kredo_item_no' => $val]);
             $request->request->add(['request_item_serial_no' => $this->generateSerialNumber()]);
             $request->request->add(['request_date' => Carbon::now()]);
-            RequestItem::create($request->except(['quantity, items, token']));
+            $requestItem = RequestItem::create($request->except(['quantity, items, token']));
+            if($request->request_status == 'approved') {
+                PurchaseRequest::create([
+                    'user_id' => $requestItem->user_id,
+                    'request_id' => $requestItem->id]);
+                }
+            Notification::create([
+                'user_id' => $requestItem->user_id,
+                'description' => 'request has been '.strtoupper($request->request_status)
+                ]);
         }
         return;
     }
@@ -46,6 +56,10 @@ class RequestItemController extends Controller
                 'user_id' => $requestItem->user_id,
                 'request_id' => $requestItem->id]);
             }
+        Notification::create([
+            'user_id' => $requestItem->user_id,
+            'description' => 'request has been '.strtoupper($request->request_status)
+            ]);
         return $request;
     }
 

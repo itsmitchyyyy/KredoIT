@@ -13,10 +13,10 @@
                     <td>`+moment(res.request_date).format('MMMM DD, YYYY')+`</td>
                     <td>`+moment(res.request_return_date).format('MMMM DD YYYY')+`</td>
                     <td>
-                        <button class="btn btn-success" onclick="updateRequest(`+res.id+`, 'approved')">
+                        <button class="btn btn-success" onclick="updateRequest(`+res.requests.id+`, 'approved')">
                             Approve
                         </button>
-                        <button class="btn btn-danger" onclick="updateRequest(`+res.id+`, 'denied')">
+                        <button class="btn btn-danger" onclick="updateRequest(`+res.requests.id+`, 'denied')">
                             Deny
                         </button>
                     </td>
@@ -39,6 +39,7 @@
         }).then(function(result){
             var options = '';
             result.map(function(res){
+                if(res.user != null)
                 options += fillUpTBody(res, 'all');
             });
             $('#historyBody').append(options);
@@ -52,7 +53,7 @@
         }).then(function(result){
             var options = '';
             result.map(function(res){
-                if(res.item_request_status == 'returned')
+                if(res.item_request_status == 'returned' && res.user != null)
                     options += fillUpTBody(res, 'all');
             });
             $('#returnedBody').append(options);
@@ -66,7 +67,7 @@
         }).then(function(result){
             var options = '';
             result.map(function(res) {
-                if(res.request_status == 'pending')
+                if(res.request_status == 'pending' && res.user != null)
                     options += fillUpTBody(res, 'request');
             });
             $('#requestItemsBody').append(options);
@@ -91,6 +92,8 @@
                 text: "Status Updated"
             }).then(function(){
                 getRequest();
+                getHistory();
+                getReturned();
             });
         });
     }

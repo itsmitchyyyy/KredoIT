@@ -20,6 +20,10 @@ class AccountController extends Controller
         return response()->json($users);
     }
 
+    public function get(Request $request){
+        return User::with('employee')->where('id', $request->id)->get();
+    }
+
     public function validateRequest(Request $data)
     {
         return Validator::make($data->all(), [
@@ -59,6 +63,25 @@ class AccountController extends Controller
         ]);
 
         return $user;
+    }
+
+    public function delete(Request $request){
+        User::find($request->id)->delete();
+        Employee::find($request->emp_id)->delete();
+        return;
+    }
+
+    public function update(Request $request){
+        $user = User::find($request->id);
+        $user->update($request->except(['token']));
+        $user->employee()->update([
+            'employee_fname' => $request->employee_fname,
+            'employee_lname' => $request->employee_lname,
+            'employee_mname' => $request->employee_mname,
+            'employee_address' => $request->employee_address,
+            'employee_phone' => $request->employee_phone,
+        ]);
+        return;
     }
 
 }

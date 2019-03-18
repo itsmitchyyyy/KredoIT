@@ -17,7 +17,7 @@ class BorrowedItemController extends Controller
     }
 
     public function list(){
-        $requests = RequestItem::with('user', 'item')->get();
+        $requests = RequestItem::with('approver.employee', 'item')->get();
         return response()->json($requests);
     }
 
