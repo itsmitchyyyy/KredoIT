@@ -68,3 +68,6 @@ Route::put('purchase/update', 'PurchaseRequestController@update')->name('purchas
 Route::get('borrowed-reports', 'ReportController@index')->name('borrowed.reports');
 Route::get('borrowed-reports/requests', 'ReportController@borrowedReports')->name('borrowed.accept');
 Route::get('borrowed-reports/members', 'ReportController@memberReports')->name('borrowed.member');
+Route::get('borrowed-reports/totalMembers', 'ReportController@totalMembers')->name('borrowed.total');
+Route::get('borrowed-reports/totalItems', 'ReportController@totalItems')->name('borrowed.total.items');
+Route::get('borrowed-reports/totalRequest', 'ReportController@totalRequest')->name('borrowed.total.request');

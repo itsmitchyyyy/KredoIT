@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Item;
 use App\RequestItem;
 use App\User;
 use DB;
@@ -29,5 +30,17 @@ class ReportController extends Controller
 
     public function memberReports(){
         return response()->json(User::all());
+    }
+
+    public function totalMembers() {
+        return response(User::where('user_type', '<>', 'ADMIN')->get()->count());
+    }
+
+    public function totalItems() {
+        return response(Item::all()->count());
+    }
+    
+    public function totalRequest() {
+        return response(RequestItem::all()->count());
     }
 }

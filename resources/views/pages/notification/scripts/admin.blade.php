@@ -1,5 +1,30 @@
 <script>
         $(function(){
+            // members
+            $.ajax({
+                url: "{{ route('borrowed.total') }}",
+                success: function(response) {
+                    $('#memberCount').text(response);
+                }
+            });
+            // end
+            // items
+            $.ajax({
+                url: "{{ route('borrowed.total.items') }}",
+                success: function(response) {
+                    $('#itemCount').text(response);
+                }
+            });
+            // end
+            // request
+            $.ajax({
+                url: "{{ route('borrowed.total.request') }}",
+                success: function(response) {
+                    $('#requestCount').text(response);
+                }
+            });
+            // end
+            // notifications
             $.ajax({
                 url: "{{ route('notification.all') }}"
             }).then(function(result){

@@ -14,8 +14,8 @@
                         <i class="zmdi zmdi-account-o"></i>
                     </div>
                     <div class="text">
-                        <h2>10368</h2>
-                        <span>members online</span>
+                        <h2 id="memberCount"></h2>
+                        <span>members</span>
                     </div>
                 </div>
             </div>
@@ -29,8 +29,8 @@
                         <i class="zmdi zmdi-shopping-cart"></i>
                     </div>
                     <div class="text">
-                        <h2>10368</h2>
-                        <span>items sold</span>
+                        <h2 id="itemCount"></h2>
+                        <span>total items</span>
                     </div>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                         <i class="zmdi zmdi-calendar-note"></i>
                     </div>
                     <div class="text">
-                        <h2>10368</h2>
+                        <h2 id="requestCount"></h2>
                         <span>request</span>
                     </div>
                 </div>
