@@ -8,6 +8,7 @@
                     <table class="table table-borderless table-data3">
                         <thead>
                             <tr>
+                                <th>Item No.</th>
                                 <th>Category</th>
                                 <th>Brand</th>
                                 <th>Model</th>

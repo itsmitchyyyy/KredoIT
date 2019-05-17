@@ -17,6 +17,7 @@
             var options = '';
             result.map(function(res){
                 options += `<tr>
+                <td>`+res.itemNo+`</td>
                 <td>`+res.categories[0].categoryName+`</td>
                 <td>`+res.brand[0].brandName+`</td>
                 <td>`+res.models[0].modelName+`</td>
