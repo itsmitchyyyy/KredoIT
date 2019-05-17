@@ -13,6 +13,40 @@
         .notification-list-icon i {
             font-size: 26px;
         }
+
+        .notification-header {
+            display: flex;
+            align-items: center;
+            background: rgba(49, 89, 253, 0.9);
+            color: #fff;
+        }
+        
+
+        .notification-header i {
+            margin-right: .25rem;
+        }
+
+        .overview-box {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overview-box .text h2 {
+            font-size: 20px;
+        }
+
+        .overview-box .text span {
+            font-size: 16px;
+        }
+
+        @media (max-width: 1519px) and (min-width: 992px) {
+            .overview-item {
+                padding-bottom: 15px;
+            }
+        }
+
     </style>
 @endpush
 @section('content')

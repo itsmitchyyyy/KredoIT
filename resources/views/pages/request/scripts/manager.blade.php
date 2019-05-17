@@ -11,12 +11,11 @@
                     <td>`+res.user.employee.employee_fname+` `+res.user.employee.employee_lname+`</td>
                     <td>`+res.item.itemName+`</td>
                     <td>`+moment(res.request_date).format('MMMM DD, YYYY')+`</td>
-                    <td>`+moment(res.request_return_date).format('MMMM DD YYYY')+`</td>
                     <td>
-                        <button class="btn btn-success" onclick="updateRequest(`+res.requests.id+`, 'approved')">
+                        <button class="btn btn-success" onclick="updateRequest(`+res.id+`, 'approved')">
                             Approve
                         </button>
-                        <button class="btn btn-danger" onclick="updateRequest(`+res.requests.id+`, 'denied')">
+                        <button class="btn btn-danger" onclick="updateRequest(`+res.id+`, 'denied')">
                             Deny
                         </button>
                     </td>
@@ -27,7 +26,6 @@
                     <td>`+res.requests.item.itemName+`</td>
                     <td>`+res.requests.approver.employee.employee_fname+` `+res.requests.approver.employee.employee_lname+`</td>
                     <td>`+moment(res.requests.request_date).format('MMMM DD, YYYY')+`</td>
-                    <td>`+moment(res.requests.request_return_date).format('MMMM DD YYYY')+`</td>
                     </tr>`;
         }
     }

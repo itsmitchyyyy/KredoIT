@@ -18,12 +18,22 @@ class ItemController extends Controller
     }
 
     public function list(){
-        $items = Item::with('categories', 'models', 'brand')->get();
+        $items = Item::with('categories', 'models', 'brand')
+                ->orderBy('id', 'DESC')
+                ->get();
         return response()->json($items);
     }
 
     public function create(Request $request){
+        $item = Item::orderBy('created_at', 'DESC')->first();
+        if($item) {
+        $itemNo = $item->itemNo + 1;
+        } else {
+            $itemNo = 1;
+        }
+        
         $request->request->add(['dateBought' => Carbon::now()]);
+        $request->request->add(['itemNo' => $itemNo]);
         return Item::create($request->except(['token']));
     }
 }

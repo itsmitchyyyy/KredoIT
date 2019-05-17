@@ -7,6 +7,7 @@ class Item extends Model
 {
     protected $fillable = [
         'user_id',
+        'itemNo',
         'itemName',
         'dateBought',
         'quantity',

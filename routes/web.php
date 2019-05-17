@@ -63,3 +63,8 @@ Route::delete('borrowed/delete', 'BorrowedItemController@delete')->name('borrowe
 Route::get('purchase/list', 'PurchaseRequestController@list')->name('purchase.list');
 Route::get('purchase/employee/list', 'PurchaseRequestController@borrowedList')->name('purchase.borrowed.list');
 Route::put('purchase/update', 'PurchaseRequestController@update')->name('purchase.update');
+
+// Reports
+Route::get('borrowed-reports', 'ReportController@index')->name('borrowed.reports');
+Route::get('borrowed-reports/requests', 'ReportController@borrowedReports')->name('borrowed.accept');
+Route::get('borrowed-reports/members', 'ReportController@memberReports')->name('borrowed.member');

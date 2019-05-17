@@ -20,7 +20,7 @@ class CreateRequestItemsTable extends Migration
             $table->string('kredo_item_no');
             $table->string('request_item_serial_no');
             $table->date('request_date');
-            $table->date('request_return_date');
+            $table->date('request_return_date')->nullable();
             $table->integer('request_approver_id')->nullable();
             $table->string('request_status')->default('pending');
             $table->timestamps();

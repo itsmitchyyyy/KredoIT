@@ -12,7 +12,6 @@ class RequestItem extends Model
         'kredo_item_no',
         'request_item_serial_no',
         'request_date',
-        'request_return_date',
         'request_approver_id',
         'request_status'
     ];

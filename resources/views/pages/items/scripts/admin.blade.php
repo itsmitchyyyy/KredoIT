@@ -19,7 +19,8 @@
                         <i class="zmdi zmdi-delete"></i>
                     </button></td></tr>`;
         } else if(attribute == 'list'){
-            return `<tr><td>`+res.categories[0].categoryName+`</td><td>`+res.brand[0].brandName+`</td><td>`+res.models[0].modelName+`</td>
+            return `<tr><td>`+res.itemNo+`</td><td>`+res.categories[0].categoryName+`</td>
+                    <td>`+res.brand[0].brandName+`</td><td>`+res.models[0].modelName+`</td>
                     <td class="process">`+res.quantity+`</td><td>`+res.status+`</td>
                     <td>
                         <div class="table-data-feature">
@@ -40,7 +41,6 @@
             type: "get",
             dataType: "json",
             success: function(res) {
-                console.log(res);
                 var data = '';
                 for(var i = 0; i < res.length; i++) {
                     data += fillUpData(res[i], attribute);

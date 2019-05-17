@@ -24,7 +24,6 @@
                                         <tr>
                                             <th>Items</th>
                                             <th>Borrowed Date</th>
-                                            <th>Borrowed Return</th>
                                             <th>Approved By</th>
                                             <th>Status</th>
                                         </tr>
@@ -40,7 +39,6 @@
                                         <tr>
                                             <th>Items</th>
                                             <th>Borrowed Date</th>
-                                            <th>Borrowed Return</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>

@@ -29,7 +29,6 @@
                                             <th>Request Name</th>
                                             <th>Item</th>
                                             <th>Request Date</th>
-                                            <th>Return Date</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -46,7 +45,6 @@
                                             <th>Item</th>
                                             <th>Approve By</th>
                                             <th>Request Date</th>
-                                            <th>Return Date</th>
                                         </tr>
                                     </thead>
                                     <tbody id="historyBody"></tbody>

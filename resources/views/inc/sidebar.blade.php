@@ -14,7 +14,13 @@
                     </li>
                     <li class="{{ Request::is('item') ? ' active' : '' }}">
                         <a href="{{ route('item.index') }}">
-                            <i class="fas fa-tachometer-alt"></i>Items</a>
+                            <i class="fas fa-shopping-cart"></i>Items</a>
+                    </li>
+                    <li class="{{ Request::is('borrowed-reports') ? ' active' : '' }}">
+                        <a href="{{ route('borrowed.reports') }}">
+                            <i class="fa fa-bar-chart-o"></i>
+                            Borrowed Reports
+                        </a>
                     </li>
                     @if (Auth::user()->user_type == 'EMPLOYEE' || Auth::user()->user_type == 'MANAGER')
                         <li class="{{ Request::is('borrowed') ? ' active' : '' }}">
