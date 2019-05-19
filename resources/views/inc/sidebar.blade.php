@@ -8,6 +8,14 @@
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
+                    @if (Auth::user()->user_type == 'MANAGER' || Auth::user()->user_type == 'ADMIN')
+                    <li class="{{ Request::is('dashboard') ? ' active' : '' }}">
+                        <a href="{{ route('borrowed.reports') }}">
+                            <i class="fa fa-tachometer-alt"></i>
+                           Dashboard
+                        </a>
+                    </li>
+                    @endif
                     <li class="{{ Request::is('notification') ? ' active' : '' }}">
                         <a href="{{ route('notification.index') }}">
                             <i class="fas fa-bell"></i>Notifications</a>
@@ -16,14 +24,6 @@
                         <a href="{{ route('item.index') }}">
                             <i class="fas fa-shopping-cart"></i>Items</a>
                     </li>
-                    @if (Auth::user()->user_type == 'MANAGER' || Auth::user()->user_type == 'ADMIN')
-                    <li class="{{ Request::is('borrowed-reports') ? ' active' : '' }}">
-                        <a href="{{ route('borrowed.reports') }}">
-                            <i class="fa fa-bar-chart-o"></i>
-                            Borrowed Reports
-                        </a>
-                    </li>
-                    @endif
                     @if (Auth::user()->user_type == 'EMPLOYEE' || Auth::user()->user_type == 'MANAGER')
                         <li class="{{ Request::is('borrowed') ? ' active' : '' }}">
                             <a href="{{ route('borrowed.index') }}">
